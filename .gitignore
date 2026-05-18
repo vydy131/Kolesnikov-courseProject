@@ -1,0 +1,128 @@
+# ============================================================
+# Investment Aggregator Platform — .gitignore
+# Stack: Java 17 / Spring Boot / Gradle  +  React Native / TypeScript
+# ============================================================
+
+# ─── macOS ───────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+
+# ─── IntelliJ IDEA / WebStorm ────────────────────────────────
+.idea/
+!.idea/.gitignore
+*.iml
+*.ipr
+*.iws
+out/
+
+# ─── Gradle ──────────────────────────────────────────────────
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+gradle-app.setting
+local.properties
+
+# ─── Java ────────────────────────────────────────────────────
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.jmod
+hs_err_pid*
+replay_pid*
+
+# ─── Spring Boot ─────────────────────────────────────────────
+# Never commit environment-specific config
+**/application-local.yml
+**/application-local.properties
+**/application-dev.yml
+**/application-prod.yml
+
+# ─── Secrets & credentials (CRITICAL for fintech) ────────────
+*.env
+.env
+.env.*
+!.env.example
+secrets.yml
+secrets.properties
+**/application-secrets.yml
+**/keystore.jks
+**/keystore.p12
+**/truststore.jks
+
+# ─── Flyway ──────────────────────────────────────────────────
+# Keep all migration files — never ignore db/migration/
+
+# ─── Node.js / React Native ──────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+package-lock.json.tmp
+
+# ─── React Native build artifacts ────────────────────────────
+# Android
+mobile/android/.gradle/
+mobile/android/app/build/
+mobile/android/build/
+mobile/android/local.properties
+mobile/android/captures/
+mobile/android/*.keystore
+!mobile/android/debug.keystore
+mobile/android/.externalNativeBuild/
+mobile/android/.cxx/
+mobile/android/app/src/main/assets/index.android.bundle
+
+# iOS
+mobile/ios/build/
+mobile/ios/Pods/
+mobile/ios/*.xcworkspace/xcuserdata/
+mobile/ios/*.xcodeproj/xcuserdata/
+mobile/ios/DerivedData/
+mobile/ios/**/*.mode1v3
+mobile/ios/**/*.mode2v3
+mobile/ios/**/*.moved-aside
+mobile/ios/**/*.pbxuser
+mobile/ios/**/*.perspectivev3
+mobile/ios/**/*.xccheckout
+mobile/ios/**/*.xcscmblueprint
+
+# Metro bundler
+mobile/.metro-health-check*
+mobile/.react-native-cache/
+
+# ─── TypeScript ──────────────────────────────────────────────
+*.tsbuildinfo
+mobile/dist/
+mobile/lib/
+
+# ─── Jest ────────────────────────────────────────────────────
+coverage/
+mobile/coverage/
+.jest-cache/
+
+# ─── Logs ────────────────────────────────────────────────────
+*.log
+logs/
+mobile/logs/
+
+# ─── Generated / temp ────────────────────────────────────────
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
