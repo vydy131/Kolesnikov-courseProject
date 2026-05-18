@@ -1,9 +1,8 @@
 package com.investagg.controller;
 
 import com.investagg.dto.response.SyncStatusResponse;
-import com.investagg.exception.ForbiddenException;
-import com.investagg.repository.InvestmentAccountRepository;
 import com.investagg.security.SecurityUtils;
+import com.investagg.service.AccountService;
 import com.investagg.service.SyncService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -25,7 +24,7 @@ import java.util.UUID;
 public class SyncController {
 
     private final SyncService syncService;
-    private final InvestmentAccountRepository accountRepository;
+    private final AccountService accountService;
     private final SecurityUtils securityUtils;
 
     @PostMapping("/accounts/{accountId}")
@@ -34,12 +33,8 @@ public class SyncController {
     public SyncStatusResponse syncAccount(@PathVariable UUID accountId,
                                           @AuthenticationPrincipal UserDetails principal) {
         UUID userId = securityUtils.getCurrentUserId(principal);
-
-        accountRepository.findByIdAndUserIdAndDeletedAtIsNull(accountId, userId)
-                .orElseThrow(() -> new ForbiddenException("Account not found or access denied"));
-
+        accountService.validateOwnership(userId, accountId);
         syncService.syncBrokerAccount(accountId);
-
         return new SyncStatusResponse(accountId, "SYNCED", OffsetDateTime.now());
     }
 }

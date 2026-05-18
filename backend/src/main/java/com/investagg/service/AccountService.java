@@ -70,6 +70,12 @@ public class AccountService {
                 .toList();
     }
 
+    public void validateOwnership(UUID userId, UUID accountId) {
+        if (!accountRepository.findByIdAndUserIdAndDeletedAtIsNull(accountId, userId).isPresent()) {
+            throw new ForbiddenException("Account not found or access denied");
+        }
+    }
+
     @Transactional
     public void disconnectAccount(UUID userId, UUID accountId) {
         InvestmentAccount account = accountRepository

@@ -120,9 +120,8 @@ public class SyncService {
 
     @Transactional
     public void syncAllActiveAccounts() {
-        List<InvestmentAccount> accounts = accountRepository.findAll().stream()
-                .filter(a -> a.getDeletedAt() == null && a.getAccountStatus() != AccountStatus.REVOKED)
-                .toList();
+        List<InvestmentAccount> accounts =
+                accountRepository.findByDeletedAtIsNullAndAccountStatusNot(AccountStatus.REVOKED);
 
         log.info("Scheduled sync: processing {} accounts", accounts.size());
         accounts.forEach(a -> syncBrokerAccount(a.getId()));

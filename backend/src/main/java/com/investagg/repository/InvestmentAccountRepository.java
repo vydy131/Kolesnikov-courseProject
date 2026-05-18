@@ -11,4 +11,5 @@ public interface InvestmentAccountRepository extends JpaRepository<InvestmentAcc
     List<InvestmentAccount> findByUserIdAndDeletedAtIsNull(UUID userId);
     Optional<InvestmentAccount> findByIdAndUserIdAndDeletedAtIsNull(UUID id, UUID userId);
     boolean existsByUserIdAndBrokerIdAndAccountNumberAndDeletedAtIsNull(UUID userId, UUID brokerId, String accountNumber);
+    List<InvestmentAccount> findByDeletedAtIsNullAndAccountStatusNot(com.investagg.entity.enums.AccountStatus status);
 }

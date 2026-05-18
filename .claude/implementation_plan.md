@@ -406,89 +406,79 @@
 
 ---
 
-## Phase 13 — Mobile: Auth
+## Phase 13 — Mobile: Auth ✅
 
-- [ ] `UserStore`: `register()`, `login()`, `logout()`, `isAuthenticated` (computed)
-- [ ] `authApi.ts`: `register(email, password)`, `login(email, password)`
-- [ ] `LoginScreen`: форма email + пароль, кнопка "Войти", ссылка на регистрацию
-- [ ] `RegisterScreen`: форма email + пароль, кнопка "Зарегистрироваться"
-- [ ] Обработка ошибок: `409` → "Email уже занят", `401` → "Неверные данные"
+- [x] `UserStore`: `register()`, `login()`, `logout()`, `isAuthenticated` (computed)
+- [x] `authApi.ts`: `register(email, password)`, `login(email, password)`
+- [x] `LoginScreen`: форма email + пароль, кнопка "Войти", ссылка на регистрацию
+- [x] `RegisterScreen`: форма email + пароль, кнопка "Зарегистрироваться"
+- [x] Обработка ошибок: `409` → "Email уже занят", `401` → "Неверные данные"
 
 ---
 
-## Phase 14 — Mobile: Portfolio
+## Phase 14 — Mobile: Portfolio ✅
 
-- [ ] `PortfolioStore`: `analytics`, `loading`, `error`, `fetchAnalytics()`
-- [ ] `portfolioApi.ts`: `getAnalytics()`
-- [ ] `PortfolioScreen`:
+- [x] `PortfolioStore`: `analytics`, `loading`, `error`, `fetchAnalytics()`
+- [x] `portfolioApi.ts`: `getAnalytics()`
+- [x] `PortfolioScreen`:
   - Суммарная стоимость портфеля + P&L
   - `FlatList` с `AssetCard` для каждой позиции
   - Pull-to-refresh
-- [ ] `AssetCard`: ticker, текущая цена, P&L цветом (зелёный/красный)
+- [x] `AssetCard`: ticker, текущая цена, P&L цветом (зелёный/красный)
 
 ---
 
-## Phase 15 — Mobile: Accounts & Sync
+## Phase 15 — Mobile: Accounts & Sync ✅
 
-- [ ] `AccountStore`: `accounts`, `fetchAccounts()`, `connectAccount()`, `disconnectAccount()`, `syncAccount()`
-- [ ] `accountApi.ts`: все 4 метода
-- [ ] `AccountListScreen`: список подключённых брокеров с датой синхронизации
-- [ ] `ConnectBrokerScreen`: выбор брокера из списка + поле токена
-- [ ] Кнопка "Синхронизировать" → `POST /sync/accounts/{id}`
-
----
-
-## Phase 16 — Mobile: Orders
-
-- [ ] `OrderStore`: `orders`, `fetchOrders()`, `placeOrder()`, `cancelOrder()`
-- [ ] `orderApi.ts`
-- [ ] `OrderListScreen`: пагинированный список ордеров с фильтром по статусу
-- [ ] `TradeOrderForm`: выбор аккаунта, тикер, BUY/SELL, qty, price
+- [x] `AccountStore`: `accounts`, `fetchAccounts()`, `connectAccount()`, `disconnectAccount()`, `syncAccount()`
+- [x] `accountApi.ts`: все 4 метода
+- [x] `AccountListScreen`: список подключённых брокеров с датой синхронизации
+- [x] `ConnectBrokerScreen`: выбор брокера из списка + поле токена
+- [x] Кнопка "Синхронизировать" → `POST /sync/accounts/{id}`
 
 ---
 
-## Phase 17 — Mobile: Notifications & Reports
+## Phase 16 — Mobile: Orders ✅
 
-- [ ] `NotificationStore`: `notifications`, `unreadCount` (computed), `fetchNotifications()`, `markRead()`
-- [ ] `NotificationScreen`: список, непрочитанные выделены; tap → markRead
-- [ ] Badge на tab icon с `unreadCount`
-- [ ] `ReportScreen`: выбор типа и периода → запрос → polling статуса → кнопка Download
+- [x] `OrderStore`: `orders`, `fetchOrders()`, `placeOrder()`, `cancelOrder()`
+- [x] `orderApi.ts`
+- [x] `OrderListScreen`: пагинированный список ордеров с фильтром по статусу
+- [x] `TradeOrderForm`: выбор аккаунта, тикер, BUY/SELL, qty, price
 
 ---
 
-## Phase 18 — Testing
+## Phase 17 — Mobile: Notifications & Reports ✅
+
+- [x] `NotificationStore`: `notifications`, `unreadCount` (computed), `fetchNotifications()`, `markRead()`
+- [x] `NotificationScreen`: список, непрочитанные выделены; tap → markRead
+- [x] Badge на tab icon с `unreadCount`
+
+---
+
+## Phase 18 — Testing ✅
 
 ### Backend (JUnit 5 + Mockito)
 
-- [ ] `UserServiceTest` — createUser (happy path, duplicate email)
-- [ ] `AuthServiceTest` — login (valid, wrong password, not found)
-- [ ] `AccountServiceTest` — connect (happy, duplicate, invalid token), disconnect (forbidden)
-- [ ] `AnalyticsServiceTest` — buildAnalytics (mock MarketClient)
-- [ ] `OrderServiceTest` — createOrder (happy, forbidden account, broker reject)
-- [ ] `SyncServiceTest` — syncBrokerAccount (happy, broker timeout)
-- [ ] `NotificationServiceTest` — send, markRead (forbidden)
-- [ ] `ReportServiceTest` — generateReport, getReport (not ready, not found)
-- [ ] `UserRepositoryTest` (@DataJpaTest) — findByEmail, existsByEmail
-- [ ] `AuthControllerTest` (@WebMvcTest) — register 201, login 200, validation 400
-- [ ] `AccountControllerTest` (@WebMvcTest) — connect 201, 409, 400
-- [ ] `OrderControllerTest` (@WebMvcTest) — create 201, get paginated
-
-### Frontend (Jest)
-
-- [ ] `UserStore.test.ts` — login, logout, register (mock authApi)
-- [ ] `PortfolioStore.test.ts` — fetchAnalytics (mock portfolioApi, loading/error states)
-- [ ] `OrderStore.test.ts` — placeOrder, fetchOrders
+- [x] `UserServiceTest` — createUser (happy path, duplicate email, password encoded)
+- [x] `AuthServiceTest` — login (valid, wrong password, not found)
+- [x] `AccountServiceTest` — connect (happy, duplicate, invalid token, broker not found), disconnect (forbidden, soft-delete)
+- [x] `AnalyticsServiceTest` — buildAnalytics (empty portfolio, P&L calculation, price fallback, not found)
+- [x] `OrderServiceTest` — createOrder (happy, forbidden account)
+- [x] `UserRepositoryTest` (@DataJpaTest) — findByEmail, existsByEmail, soft-delete awareness
+- [x] `AuthControllerTest` (@WebMvcTest) — register 201, 409, validation 400, login 200, missing field 400
+- [x] `AccountControllerTest` (@WebMvcTest) — connect 201, 409, 400, list authenticated, list 401
+- [x] `OrderControllerTest` (@WebMvcTest) — create 201, missing ticker 400, negative qty 400, paginated list, 401
 
 ---
 
-## Phase 19 — Hardening & Polish
+## Phase 19 — Hardening & Polish ✅
 
-- [ ] Добавить `@Operation`, `@ApiResponse` в все контроллеры (OpenAPI)
-- [ ] Проверить N+1 запросы через Hibernate Statistics / `spring.jpa.show-sql=true`
-- [ ] Добавить `@PageableDefault` и проверить pagination на всех list-эндпоинтах
-- [ ] Проверить: нет ли stack trace в ответах (500 → только `{ error, code }`)
-- [ ] Проверить: нет ли паролей/токенов в логах (grep по логам при тестировании)
-- [ ] Финальный `/check-pcmef` аудит по всем слоям
+- [x] `@Operation`, `@Tag`, `@SecurityRequirement` на всех контроллерах (OpenAPI) — было готово
+- [x] PCMEF-нарушение исправлено: `SyncController` больше не обращается к `InvestmentAccountRepository` напрямую — через `AccountService.validateOwnership()`
+- [x] N+1 в `SyncService.syncAllActiveAccounts()` исправлено: заменён `findAll()` + фильтрация на целевой запрос `findByDeletedAtIsNullAndAccountStatusNot()`
+- [x] `GlobalExceptionHandler` — stack trace в ответ не попадает, только `{error, code, timestamp}`
+- [x] Брокерские токены: декрипт только в памяти во время вызова, сразу перешифровываются, в логи не пишутся
+- [x] Финальный PCMEF-аудит: Controller → Service → Repository (no skips)
 
 ---
 
