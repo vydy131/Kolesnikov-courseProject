@@ -523,12 +523,12 @@ Phase 18 → Phase 19 (Hardening)
 
 | Phase | Статус | Примечание |
 |-------|--------|------------|
-| 1 — Bootstrap | ⬜ не начата | |
-| 2 — Migrations | ⬜ не начата | |
-| 3 — Entity/Repository | ⬜ не начата | |
-| 4 — Security | ⬜ не начата | |
-| 5 — Infrastructure | ⬜ не начата | |
-| 6 — Auth | ⬜ не начата | |
+| 1 — Bootstrap | ✅ выполнена | Spring Boot 3.5.0, RN init, Docker Compose |
+| 2 — Migrations | ✅ выполнена | V1–V11, все 10 таблиц + seed brokers |
+| 3 — Entity/Repository | ✅ выполнена | 10 entity, 7 enum, 10 repository |
+| 4 — Security | ✅ выполнена | JWT, BCrypt, AES-256, SecurityConfig |
+| 5 — Infrastructure | ✅ выполнена | Exceptions, GlobalExceptionHandler, OpenAPI, PageResponse |
+| 6 — Auth | ✅ выполнена | UserService, AuthService, AuthController — BUILD SUCCESSFUL |
 | 7 — Accounts | ⬜ не начата | |
 | 8 — Sync | ⬜ не начата | |
 | 9 — Analytics | ⬜ не начата | |

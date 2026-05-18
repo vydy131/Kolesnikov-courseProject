@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  flyway:
+    enabled: false    # use DDL auto in tests
+
+app:
+  jwt:
+    secret: test-secret-key-that-is-long-enough-for-hmac
+    expiration-ms: 3600000
+  aes:
+    key: 0123456789abcdef0123456789abcdef
+
+logging:
+  level:
+    com.investagg: DEBUG
