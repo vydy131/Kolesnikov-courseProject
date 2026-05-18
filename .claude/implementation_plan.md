@@ -529,11 +529,11 @@ Phase 18 → Phase 19 (Hardening)
 | 4 — Security | ✅ выполнена | JWT, BCrypt, AES-256, SecurityConfig |
 | 5 — Infrastructure | ✅ выполнена | Exceptions, GlobalExceptionHandler, OpenAPI, PageResponse |
 | 6 — Auth | ✅ выполнена | UserService, AuthService, AuthController — BUILD SUCCESSFUL |
-| 7 — Accounts | ⬜ не начата | |
-| 8 — Sync | ⬜ не начата | |
-| 9 — Analytics | ⬜ не начата | |
-| 10 — Orders + Notifications | ⬜ не начата | |
-| 11 — Reports | ⬜ не начата | |
+| 7 — Accounts | ✅ выполнена | BrokerClient (Mock), AccountService, AccountController |
+| 8 — Sync | ✅ выполнена | MarketClient (Mock), SyncService, SyncScheduler, SyncController |
+| 9 — Analytics | ✅ выполнена | AnalyticsService (live prices + P&L calc), PortfolioController |
+| 10 — Orders + Notifications | ✅ выполнена | OrderService, NotificationService, OrderController, NotificationController |
+| 11 — Reports | ✅ выполнена | ReportService (@Async PDF), ReportController — BUILD SUCCESSFUL |
 | 12 — Mobile Bootstrap | ⬜ не начата | |
 | 13 — Mobile Auth | ⬜ не начата | |
 | 14 — Mobile Portfolio | ⬜ не начата | |
