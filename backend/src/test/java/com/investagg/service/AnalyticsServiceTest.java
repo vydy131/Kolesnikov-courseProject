@@ -90,7 +90,7 @@ class AnalyticsServiceTest {
         assertThat(response.profitLoss()).isEqualByComparingTo("500.00");
         assertThat(response.profitLossPercent()).isEqualByComparingTo("20.00");
         assertThat(response.assets()).hasSize(1);
-        assertThat(response.assets().getFirst().ticker()).isEqualTo("SBER");
+        assertThat(response.assets().get(0).ticker()).isEqualTo("SBER");
     }
 
     @Test

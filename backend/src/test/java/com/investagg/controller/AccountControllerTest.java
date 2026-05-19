@@ -6,13 +6,18 @@ import com.investagg.dto.response.AccountResponse;
 import com.investagg.entity.enums.AccountStatus;
 import com.investagg.exception.ConflictException;
 import com.investagg.repository.BrokerRepository;
+import com.investagg.security.JwtAuthFilter;
 import com.investagg.security.JwtService;
 import com.investagg.security.SecurityUtils;
 import com.investagg.service.AccountService;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -24,6 +29,7 @@ import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -38,23 +44,35 @@ class AccountControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
+    @MockitoBean
     private AccountService accountService;
 
-    @MockBean
+    @MockitoBean
     private BrokerRepository brokerRepository;
 
-    @MockBean
+    @MockitoBean
     private SecurityUtils securityUtils;
 
-    @MockBean
+    @MockitoBean
+    private JwtAuthFilter jwtAuthFilter;
+
+    @MockitoBean
     private JwtService jwtService;
 
-    @MockBean
+    @MockitoBean
     private UserDetailsService userDetailsService;
 
     private final UUID USER_ID = UUID.randomUUID();
     private final UUID BROKER_ID = UUID.randomUUID();
+
+    @BeforeEach
+    void allowFilterChain() throws Exception {
+        doAnswer(inv -> {
+            ((FilterChain) inv.getArgument(2))
+                    .doFilter((ServletRequest) inv.getArgument(0), (ServletResponse) inv.getArgument(1));
+            return null;
+        }).when(jwtAuthFilter).doFilter(any(), any(), any());
+    }
 
     private AccountResponse buildAccountResponse() {
         return new AccountResponse(

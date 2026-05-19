@@ -65,7 +65,7 @@ class AccountServiceTest {
         broker.setId(UUID.randomUUID());
         broker.setName("Tinkoff");
         broker.setApiBase("https://api.tinkoff.ru");
-        broker.setIsActive(true);
+        broker.setActive(true);
         return broker;
     }
 

@@ -253,11 +253,5 @@ API Client (api/)                 Mediator (service/)
 
 ---
 
-## Дополнительные инструменты (`.claude/`)
-
-| Команда | Что делает |
-|---------|------------|
-| `/new-entity <Name>` | Создаёт JPA entity + repository + Flyway миграцию |
-| `/new-service <Name>` | Создаёт service + DTO + заготовку контроллера |
-| `/new-migration <desc>` | Создаёт следующий файл Flyway миграции |
-| `/check-pcmef <path>` | Аудит файлов на нарушения PCMEF |
+## Демо
+demo@investagg.ru / Demo1234

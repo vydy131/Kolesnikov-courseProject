@@ -7,7 +7,8 @@
 #   ./start.sh ios        — run with iOS simulator
 #   ./start.sh backend    — start only backend + DB
 #   ./start.sh db         — start only Docker containers (Postgres + pgAdmin)
-#   ./start.sh stop       — stop all Docker containers
+#
+#   To stop everything: ./stop.sh
 # =============================================================================
 
 set -euo pipefail
@@ -99,7 +100,7 @@ start_backend() {
   ok "Build successful"
 
   log "Starting backend (logs → backend/app.log)..."
-  nohup ./gradlew bootRun --args='--spring.profiles.active=dev' \
+  nohup ./gradlew bootRun \
     > "$BACKEND_DIR/app.log" 2>&1 &
   BACKEND_PID=$!
   echo $BACKEND_PID > "$BACKEND_DIR/.pid"
@@ -146,11 +147,11 @@ start_mobile() {
     ok "Pods installed"
 
     log "Starting Metro bundler in background..."
-    npx react-native start --reset-cache &>/dev/null &
+    npx react-native start --reset-cache --port 8082 &>/dev/null &
     sleep 3
 
     log "Building and launching on iOS simulator..."
-    npx react-native run-ios
+    npx react-native run-ios --port 8082
 
   else
     # Android
@@ -161,37 +162,21 @@ start_mobile() {
     fi
 
     log "Starting Metro bundler in background..."
-    npx react-native start --reset-cache &>/dev/null &
+    npx react-native start --reset-cache --port 8082 &>/dev/null &
     sleep 3
 
+    if command -v adb &>/dev/null; then
+      log "Setting up ADB reverse for Metro port 8082..."
+      adb reverse tcp:8082 tcp:8082 && ok "ADB reverse set: device:8082 → host:8082"
+    else
+      warn "adb not found — run manually: adb reverse tcp:8082 tcp:8082"
+    fi
+
     log "Building and launching on Android..."
-    npx react-native run-android
+    npx react-native run-android --port 8082
   fi
 
   ok "Mobile app launched"
-}
-
-# =============================================================================
-# STOP
-# =============================================================================
-stop_all() {
-  step "Stopping all services"
-
-  cd "$SCRIPT_DIR"
-
-  if [ -f "$BACKEND_DIR/.pid" ]; then
-    PID=$(cat "$BACKEND_DIR/.pid")
-    if kill -0 "$PID" 2>/dev/null; then
-      log "Stopping backend (PID=$PID)..."
-      kill "$PID"
-      ok "Backend stopped"
-    fi
-    rm -f "$BACKEND_DIR/.pid"
-  fi
-
-  log "Stopping Docker containers..."
-  docker compose down
-  ok "Docker containers stopped"
 }
 
 # =============================================================================
@@ -202,7 +187,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 
 case "$MODE" in
   stop)
-    stop_all
+    exec "$SCRIPT_DIR/stop.sh"
     ;;
   db)
     start_db
