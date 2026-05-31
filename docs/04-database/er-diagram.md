@@ -1,5 +1,8 @@
 # ER-диаграмма
 
+
+![usecases](./images/er.png)
+
 ## Таблицы (10)
 
 | Таблица | Описание | Soft Delete |

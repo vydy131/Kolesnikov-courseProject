@@ -1,5 +1,7 @@
 # Диаграмма вариантов использования (Use-Case Diagram)
 
+![usecases](./images/useCases.png)
+
 ## Акторы
 
 | Актор | Описание |

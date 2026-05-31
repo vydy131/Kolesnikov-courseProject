@@ -1,5 +1,8 @@
 # PCMEF-диаграмма
 
+![usecases](./images/pcmefFront.png)
+![usecases](./images/pcmefBack.png)
+
 ## Распределённая архитектура
 
 ```

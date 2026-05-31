@@ -1,5 +1,7 @@
 # Модель предметной области (Domain Model)
 
+![usecases](./images/domainModel.png)
+
 ## Сущности и их атрибуты
 
 ### User
