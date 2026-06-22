@@ -253,6 +253,8 @@ API Client (api/)                 Mediator (service/)
 
 ---
 
+## Статистика разработки
+
 ### График активности коммитов
 
 ![График активности коммитов](./docs/images/commit-activity.png)
