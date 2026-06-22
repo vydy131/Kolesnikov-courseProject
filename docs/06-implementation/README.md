@@ -23,3 +23,4 @@
 
 - [code-structure.md](code-structure.md) — структура кода по слоям PCMEF
 - [tests.md](tests.md) — тестирование (40 тестов)
+- [static-analysis.md](checkstyle-analysis.md) — отчёт статического анализа (Checkstyle)

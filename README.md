@@ -253,5 +253,24 @@ API Client (api/)                 Mediator (service/)
 
 ---
 
+### График активности коммитов
+
+![График активности коммитов](./docs/images/commit-activity.png)
+
+### Тепловая карта активности (Punch Card)
+
+![Punch Card](./docs/images/punch-card.png)
+
+---
+
 ## Демо
 demo@investagg.ru / Demo1234
+
+---
+
+## Скриншоты интерфейса
+
+![img_0](./docs/images/img_0.png)  
+![img_0](./docs/images/img_1.png)  
+![img_0](./docs/images/img_2.png)  
+![img_0](./docs/images/img_3.png)  

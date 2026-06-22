@@ -1,0 +1,134 @@
+@startuml BUC-диаграмма InvestAgg
+
+!theme plain
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam defaultFontSize 13
+skinparam backgroundColor #FEFEFE
+skinparam roundcorner 10
+
+skinparam usecase {
+  BackgroundColor #E8F0FE
+  BorderColor #1A73E8
+  FontColor #1A1A2E
+  ArrowColor #555555
+}
+
+skinparam actor {
+  BackgroundColor #FFF3E0
+  BorderColor #E65100
+}
+
+skinparam rectangle {
+  BackgroundColor #F5F7FA
+  BorderColor #333333
+}
+
+title BUC-диаграмма — Investment Aggregator Platform
+
+' ─── Акторы ──────────────────────────────────────────
+
+actor "Инвестор\n(пользователь)" as Investor
+actor "Брокер API" as BrokerAPI
+actor "Рыночные\nданные API" as MarketAPI
+actor "Платёжная\nсистема" as Payment
+actor "Регулятор" as Regulator
+
+' ─── Система ─────────────────────────────────────────
+
+rectangle "Investment Aggregator Platform" {
+
+  ' --- Управление пользователями ---
+  package "Управление пользователями" {
+    usecase "Регистрация\nпользователя" as UC_Register
+    usecase "Аутентификация\n(JWT)" as UC_Login
+    usecase "Управление\nпрофилем" as UC_Profile
+  }
+
+  ' --- Управление счетами ---
+  package "Управление счетами" {
+    usecase "Подключение\nброкерского счёта" as UC_Connect
+    usecase "Отключение\nсчёта" as UC_Disconnect
+    usecase "Просмотр\nсписка счетов" as UC_ListAccounts
+  }
+
+  ' --- Синхронизация ---
+  package "Синхронизация данных" {
+    usecase "Ручная\nсинхронизация" as UC_ManualSync
+    usecase "Автоматическая\nсинхронизация\n(каждые 15 мин)" as UC_AutoSync
+  }
+
+  ' --- Аналитика ---
+  package "Аналитика портфеля" {
+    usecase "Просмотр\nаналитики P&L" as UC_Analytics
+    usecase "Получение\nрыночных цен" as UC_Prices
+  }
+
+  ' --- Торговля ---
+  package "Торговые операции" {
+    usecase "Создание\nордера BUY/SELL" as UC_PlaceOrder
+    usecase "Отмена\nордера" as UC_CancelOrder
+    usecase "Просмотр\nистории ордеров" as UC_ListOrders
+  }
+
+  ' --- Уведомления ---
+  package "Уведомления" {
+    usecase "Получение\nуведомлений" as UC_Notifications
+    usecase "Отметка\nо прочтении" as UC_MarkRead
+  }
+
+  ' --- Отчётность ---
+  package "Отчётность" {
+    usecase "Генерация\nотчёта (PDF/CSV)" as UC_Report
+  }
+
+  ' --- Безопасность ---
+  package "Безопасность" {
+    usecase "Шифрование\nброкерских токенов\n(AES-256-GCM)" as UC_Encrypt
+    usecase "Хэширование\nпаролей (BCrypt)" as UC_Hash
+  }
+}
+
+' ─── Связи: Инвестор ─────────────────────────────────
+
+Investor --> UC_Register
+Investor --> UC_Login
+Investor --> UC_Profile
+Investor --> UC_Connect
+Investor --> UC_Disconnect
+Investor --> UC_ListAccounts
+Investor --> UC_ManualSync
+Investor --> UC_Analytics
+Investor --> UC_PlaceOrder
+Investor --> UC_CancelOrder
+Investor --> UC_ListOrders
+Investor --> UC_Notifications
+Investor --> UC_MarkRead
+Investor --> UC_Report
+
+' ─── Связи: Внешние системы ─────────────────────────
+
+UC_Connect --> BrokerAPI
+UC_ManualSync --> BrokerAPI
+UC_AutoSync --> BrokerAPI
+UC_PlaceOrder --> BrokerAPI
+UC_CancelOrder --> BrokerAPI
+
+UC_Analytics --> MarketAPI
+UC_Prices --> MarketAPI
+
+' ─── Include / Extend ────────────────────────────────
+
+UC_Connect ..> UC_Encrypt : <<include>>
+UC_Register ..> UC_Hash : <<include>>
+UC_Analytics ..> UC_Prices : <<include>>
+UC_PlaceOrder ..> UC_Notifications : <<include>>
+UC_AutoSync ..> UC_Notifications : <<extend>>\nпри ошибке
+
+' ─── Связи: Регулятор и платежи ─────────────────────
+
+Regulator ..> UC_Encrypt : контроль
+Regulator ..> UC_Report : аудит
+Payment ..> UC_PlaceOrder : расчёты
+
+@enduml
